@@ -7,6 +7,8 @@
 #include <QTimer>
 #include <QDebug>
 #include <QStringList>
+#include <Windows.h>
+#include <tchar.h>
 
 namespace Ui {
 class MainWindow;

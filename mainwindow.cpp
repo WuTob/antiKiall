@@ -38,15 +38,9 @@ bool isPythonActive()
     return false;
 }
 
-bool runScript()
+void runScript()
 {
-    QProcess process;
-    QStringList list;
-    list.append("C://qt/1.py");
-
-    process.start("python", list);
-
-    return process.waitForStarted();
+    ShellExecute(NULL, _T("open"), _T("1.pyw"), NULL, _T("C://qt/"), SW_SHOWNORMAL);
 }
 
 void antiKill()
