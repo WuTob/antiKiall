@@ -1,21 +1,22 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-void antiKill();
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->StopButton->setEnabled(false);
 
-    QTimer* timer = new QTimer(this);
+    timer = new QTimer(this);
 
-    timer->singleShot(1000, &antiKill);
+    connect(timer, &QTimer::timeout, this, &antiKill);
+    timer->start(1000);
 }
 
 MainWindow::~MainWindow()
 {
+    delete timer;
     delete ui;
 }
 
@@ -23,14 +24,16 @@ bool isPythonActive()
 {
     QProcess process;
 
-    if(process.execute("tasklist"))
+    process.start("tasklist");
+
+    if(process.waitForFinished())
     {
         QString taskListString;
         taskListString.append(process.readAll());
 
-        qDebug() << taskListString.indexOf("pythonw.exe");
+        qDebug() << taskListString.indexOf("python", 10);
 
-        if(taskListString.indexOf("pythonw.exe") != -1){
+        if(taskListString.indexOf("python") != -1){
             return true;
         }
         return false;
@@ -45,5 +48,26 @@ void runScript()
 
 void antiKill()
 {
+    qDebug() << "test";
     if(!isPythonActive()) runScript();
+}
+
+
+
+void MainWindow::on_StarButton_clicked()
+{
+    timer->start(2000);
+    ui->StopButton->setEnabled(true);
+}
+
+void MainWindow::on_StopButton_clicked()
+{
+    passWordDialog pwdDialog;
+    pwdDialog.show();
+    if(pwdDialog.exec() == QDialog::Accepted)
+    {
+        timer->stop();
+        ui->StarButton->setEnabled(true);
+        ui->StopButton->setEnabled(false);
+    }
 }

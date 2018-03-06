@@ -22,8 +22,16 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+private slots:
+    void on_StarButton_clicked();
+
+    void on_StopButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QTimer* timer;
 };
+
+void antiKill();
 
 #endif // MAINWINDOW_H
