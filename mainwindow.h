@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 #include "passworddialog.h"
+#include <QProcess>
+#include <QTimer>
+#include <QDebug>
+#include <QStringList>
 
 namespace Ui {
 class MainWindow;

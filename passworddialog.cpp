@@ -7,6 +7,7 @@ passWordDialog::passWordDialog(QWidget *parent) :
     ui(new Ui::passWordDialog)
 {
     ui->setupUi(this);
+
 }
 
 passWordDialog::~passWordDialog()
@@ -16,19 +17,29 @@ passWordDialog::~passWordDialog()
 
 void passWordDialog::on_pushButton_clicked()
 {
-    QString md5;
-    QString pwd = ui->passWordEditer->toPlainText();
+    auto       passWord{ui->passWordEditer->text()};
+    QByteArray passWordByte;
 
-    QByteArray result = QCryptographicHash::hash( pwd.toLatin1(), QCryptographicHash::Md5);
-    md5.append(result);
+    passWordByte.append(passWord);
 
-    QFile data("D://secret.pwd");
-    if(data.open(QFile::ReadOnly))
+    QCryptographicHash hash{QCryptographicHash::Md5};
+    hash.addData(passWordByte);
+
+    QByteArray result{hash.result()};
+
+    QString passWordHash;
+    passWordHash.append(result.toHex());
+
+    QFile data{"C://qt/secret.pwd"};
+    if(data.open(QIODevice::ReadOnly))
     {
-        QString MD5(data.readAll());
-        qDebug() << MD5 << " " << md5 << " " << pwd;
-        if(md5 == MD5) QDialog::accept();
-        else QMessageBox::warning(this,"WrongPassWord","WrongPassWord");
-    }
+        auto correctHash{data.readAll()};
 
+        if(passWordHash == correctHash){
+            QDialog::accept();
+        }
+        else{
+            QMessageBox::warning(this, "WrongPassWord", "WrongPassWord");
+        }
+    }
 }
