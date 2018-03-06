@@ -6,17 +6,27 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->StopButton->setEnabled(false);
+    ui->StarButton->setEnabled(false);
+    setWindowFlags(Qt::WindowMinMaxButtonsHint);
+
+    tray = new QSystemTrayIcon;
+    tray->setIcon(QIcon("C://qt/timg.jpg"));
+    connect(tray,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(tray_clicked(QSystemTrayIcon::ActivationReason)));
+    tray->show();
+
+    setContextMenuPolicy(Qt::NoContextMenu);
 
     timer = new QTimer(this);
 
     connect(timer, &QTimer::timeout, this, &antiKill);
-    timer->start(1000);
+    timer->start(2000);
 }
 
 MainWindow::~MainWindow()
 {
     delete timer;
+    tray->hide();
+    delete tray;
     delete ui;
 }
 
@@ -58,16 +68,30 @@ void MainWindow::on_StarButton_clicked()
 {
     timer->start(2000);
     ui->StopButton->setEnabled(true);
+    ui->StarButton->setEnabled(false);
 }
 
 void MainWindow::on_StopButton_clicked()
 {
     passWordDialog pwdDialog;
     pwdDialog.show();
+
     if(pwdDialog.exec() == QDialog::Accepted)
     {
         timer->stop();
         ui->StarButton->setEnabled(true);
         ui->StopButton->setEnabled(false);
+    }
+}
+
+void MainWindow::tray_clicked(QSystemTrayIcon::ActivationReason reason)
+{
+    switch(reason){
+    case QSystemTrayIcon::DoubleClick:
+        this->setVisible(true);
+        break;
+
+    default:
+        break;
     }
 }

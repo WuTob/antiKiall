@@ -9,6 +9,8 @@
 #include <QStringList>
 #include <Windows.h>
 #include <tchar.h>
+#include <QSystemTrayIcon>
+#include <QIcon>
 
 namespace Ui {
 class MainWindow;
@@ -24,12 +26,13 @@ public:
 
 private slots:
     void on_StarButton_clicked();
-
     void on_StopButton_clicked();
+    void tray_clicked(QSystemTrayIcon::ActivationReason);
 
 private:
     Ui::MainWindow *ui;
     QTimer* timer;
+    QSystemTrayIcon* tray;
 };
 
 void antiKill();
