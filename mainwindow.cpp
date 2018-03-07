@@ -33,21 +33,20 @@ MainWindow::~MainWindow()
 bool isPythonActive()
 {
     QProcess process;
+    QString result;
 
-    process.start("tasklist");
+    process.start("tasklist", QStringList() << "/fi" << "imagename eq pythonw.exe");
 
     if(process.waitForFinished())
     {
-        QString taskListString;
-        taskListString.append(process.readAll());
-
-        qDebug() << taskListString.indexOf("python", 10);
-
-        if(taskListString.indexOf("python") != -1){
+        result.append(process.readAll());
+        if(result.indexOf("PID") != -1)
+        {
             return true;
         }
         return false;
     }
+
     return false;
 }
 
@@ -88,7 +87,7 @@ void MainWindow::tray_clicked(QSystemTrayIcon::ActivationReason reason)
 {
     switch(reason){
     case QSystemTrayIcon::DoubleClick:
-        this->setVisible(true);
+        this->show();
         break;
 
     default:
