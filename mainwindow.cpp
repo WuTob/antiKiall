@@ -8,9 +8,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->StarButton->setEnabled(false);
     setWindowFlags(Qt::WindowMinMaxButtonsHint);
+    setWindowFlags(Qt::FramelessWindowHint|Qt::Tool);
 
     tray = new QSystemTrayIcon;
-    tray->setIcon(QIcon("C://qt/timg.jpg"));
+    tray->setIcon(QIcon("timg.jpg"));
     connect(tray,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),this,SLOT(tray_clicked(QSystemTrayIcon::ActivationReason)));
     tray->show();
 
@@ -52,6 +53,7 @@ bool isPythonActive()
 
 void runScript()
 {
+
     ShellExecute(NULL, _T("open"), _T("1.pyw"), NULL, _T("C://qt/"), SW_SHOWNORMAL);
 }
 
@@ -72,8 +74,7 @@ void MainWindow::on_StarButton_clicked()
 
 void MainWindow::on_StopButton_clicked()
 {
-    passWordDialog pwdDialog;
-    pwdDialog.show();
+    passWordDialog pwdDialog(this);
 
     if(pwdDialog.exec() == QDialog::Accepted)
     {
@@ -93,4 +94,27 @@ void MainWindow::tray_clicked(QSystemTrayIcon::ActivationReason reason)
     default:
         break;
     }
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    this->hide();
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *e)
+{
+    last = e->globalPos();
+}
+void MainWindow::mouseMoveEvent(QMouseEvent *e)
+{
+    int dx = e->globalX() - last.x();
+    int dy = e->globalY() - last.y();
+    last = e->globalPos();
+    move(x()+dx, y()+dy);
+}
+void MainWindow::mouseReleaseEvent(QMouseEvent *e)
+{
+    int dx = e->globalX() - last.x();
+    int dy = e->globalY() - last.y();
+    move(x()+dx, y()+dy);
 }

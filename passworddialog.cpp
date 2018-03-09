@@ -30,7 +30,7 @@ void passWordDialog::on_pushButton_clicked()
     QString passWordHash;
     passWordHash.append(result.toHex());
 
-    QFile data{"C://qt/secret.pwd"};
+    QFile data{"secret.pwd"};
     if(data.open(QIODevice::ReadOnly))
     {
         auto correctHash{data.readAll()};

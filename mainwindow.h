@@ -11,6 +11,8 @@
 #include <tchar.h>
 #include <QSystemTrayIcon>
 #include <QIcon>
+#include <QPoint>
+#include <QMouseEvent>
 
 namespace Ui {
 class MainWindow;
@@ -29,10 +31,18 @@ private slots:
     void on_StopButton_clicked();
     void tray_clicked(QSystemTrayIcon::ActivationReason);
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTimer* timer;
     QSystemTrayIcon* tray;
+    QPoint last;
+
+protected:
+    void mousePressEvent(QMouseEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
+    void mouseReleaseEvent(QMouseEvent *e);
 };
 
 void antiKill();
