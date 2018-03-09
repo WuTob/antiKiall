@@ -14,10 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    passworddialog.cpp
+    passworddialog.cpp \
+    antikill.cpp
 
 HEADERS  += mainwindow.h \
-    passworddialog.h
+    passworddialog.h \
+    libraries.h \
+    antikill.h
 
 FORMS    += mainwindow.ui \
     passworddialog.ui

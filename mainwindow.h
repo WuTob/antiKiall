@@ -3,16 +3,7 @@
 
 #include <QMainWindow>
 #include "passworddialog.h"
-#include <QProcess>
-#include <QTimer>
-#include <QDebug>
-#include <QStringList>
-#include <Windows.h>
-#include <tchar.h>
-#include <QSystemTrayIcon>
-#include <QIcon>
-#include <QPoint>
-#include <QMouseEvent>
+#include "libraries.h"
 
 namespace Ui {
 class MainWindow;
