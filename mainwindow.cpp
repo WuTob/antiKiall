@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+int ShellExecuteCode;
+QString taskListOutPut;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -21,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(timer, &QTimer::timeout, this, &antiKill);
     timer->start(2000);
+
 }
 
 MainWindow::~MainWindow()
@@ -41,6 +45,8 @@ bool isPythonActive()
     if(process.waitForFinished())
     {
         result.append(process.readAll());
+        taskListOutPut = result;
+        qDebug() << taskListOutPut;
         if(result.indexOf("PID") != -1)
         {
             return true;
@@ -54,12 +60,11 @@ bool isPythonActive()
 void runScript()
 {
 
-    ShellExecute(NULL, _T("open"), _T("1.pyw"), NULL, _T("C://qt/"), SW_SHOWNORMAL);
+    ShellExecuteCode = (int)ShellExecute(NULL, _T("open"), _T("1.pyw"), NULL, _T("C://qt/"), SW_SHOWNORMAL);
 }
 
 void antiKill()
 {
-    qDebug() << "test";
     if(!isPythonActive()) runScript();
 }
 
@@ -81,6 +86,14 @@ void MainWindow::on_StopButton_clicked()
         timer->stop();
         ui->StarButton->setEnabled(true);
         ui->StopButton->setEnabled(false);
+
+        QFile file("output.log");
+        if(file.open(QIODevice::WriteOnly)){
+            QString output;
+            output.append(taskListOutPut).append("\n").append(QString::number(ShellExecuteCode, 10));
+            file.write(output.toLatin1());
+        }
+
     }
 }
 
