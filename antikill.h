@@ -9,10 +9,12 @@ class AntiKill
 public:
     AntiKill(QString processName, QString path);
     ~AntiKill();
-    RUN_STATE run();
+    void run();
+    void stop;
 
 
 private:
+    QTimer* timer;
     QString processName, path;
 };
 

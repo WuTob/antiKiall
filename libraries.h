@@ -12,5 +12,6 @@
 #include <QPoint>
 #include <QMouseEvent>
 #include <QDir>
+#include <QLockFile>
 
 #endif // LIBRARY_H
