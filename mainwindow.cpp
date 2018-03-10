@@ -59,8 +59,10 @@ bool isPythonActive()
 
 void runScript()
 {
+    const char* path = QDir::currentPath().toLocal8Bit().data();
 
-    ShellExecuteCode = (int)ShellExecute(NULL, _T("open"), _T("1.pyw"), NULL, _T("C://qt/"), SW_SHOWNORMAL);
+
+    ShellExecuteCode = (int)ShellExecuteA(NULL, "open", "1.pyw", NULL, path, SW_SHOWNORMAL);
 }
 
 void antiKill()

@@ -11,5 +11,6 @@
 #include <QIcon>
 #include <QPoint>
 #include <QMouseEvent>
+#include <QDir>
 
 #endif // LIBRARY_H
