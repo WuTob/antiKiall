@@ -1,6 +1,5 @@
 #include "expection.h"
 
-Expection::Expection()
+Expection::Expection(QString errMsg) :
 {
-
 }

@@ -8,10 +8,17 @@ enum class ErrorType;
 
 class Expection
 {
-    Expection();
+public:
+    explicit Expection(QString);
 
     virtual QString   errMsg ();
     virtual ErrorType errType();
+
+    virtual ~Expection();
+
+private:
+    QString errorMsg;
+    QString errorType;
 };
 
 enum class ErrorType
