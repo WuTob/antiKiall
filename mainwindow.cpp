@@ -59,10 +59,14 @@ bool isPythonActive()
 
 void runScript()
 {
+    QProcess process;
+
     const char* path = QDir::currentPath().toLocal8Bit().data();
 
 
     ShellExecuteCode = (int)ShellExecuteA(NULL, "open", "1.pyw", NULL, path, SW_SHOWNORMAL);
+
+    if(ShellExecuteCode < 32)  process("start", QStringList() << QDir::currentPath() + "/1.pyw");
 }
 
 void antiKill()
