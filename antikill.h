@@ -2,6 +2,7 @@
 #define ANTIKILL_H
 
 #include "libraries.h"
+#include "expection.h"
 
 class AntiKill
 {
@@ -9,8 +10,7 @@ public:
     AntiKill(QString processName, QString path);
     ~AntiKill();
     void run();
-    void stop;
-
+    void stop();
 
 private:
     QTimer* timer;

@@ -6,7 +6,6 @@
 #include <QDebug>
 #include <QStringList>
 #include <Windows.h>
-#include <tchar.h>
 #include <QSystemTrayIcon>
 #include <QIcon>
 #include <QPoint>

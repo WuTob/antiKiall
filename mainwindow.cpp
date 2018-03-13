@@ -37,24 +37,7 @@ MainWindow::~MainWindow()
 
 bool isPythonActive()
 {
-    QProcess process;
-    QString result;
 
-    process.start("tasklist", QStringList() << "/fi" << "imagename eq pythonw.exe");
-
-    if(process.waitForFinished())
-    {
-        result.append(process.readAll());
-        taskListOutPut = result;
-        qDebug() << taskListOutPut;
-        if(result.indexOf("PID") != -1)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    return false;
 }
 
 void runScript()
@@ -64,9 +47,6 @@ void runScript()
     const char* path = QDir::currentPath().toLocal8Bit().data();
 
 
-    ShellExecuteCode = (int)ShellExecuteA(NULL, "open", "1.pyw", NULL, path, SW_SHOWNORMAL);
-
-    if(ShellExecuteCode < 32)  process("start", QStringList() << QDir::currentPath() + "/1.pyw");
 }
 
 void antiKill()

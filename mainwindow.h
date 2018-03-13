@@ -29,6 +29,7 @@ private:
     QTimer* timer;
     QSystemTrayIcon* tray;
     QPoint last;
+    QProcess process;
 
 protected:
     void mousePressEvent(QMouseEvent *e);
