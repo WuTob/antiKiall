@@ -12,5 +12,7 @@
 #include <QMouseEvent>
 #include <QDir>
 #include <QLockFile>
+#include <QTextStream>
+#include <QDateTime>
 
 #endif // LIBRARY_H

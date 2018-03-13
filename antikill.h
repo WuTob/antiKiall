@@ -9,8 +9,9 @@ class AntiKill
 public:
     AntiKill(QString processName, QString path);
     ~AntiKill();
-    void run();
+    void start();
     void stop();
+    void run();
 
 private:
     QTimer* timer;
@@ -20,6 +21,7 @@ private:
 bool isProcessActive (QString processName);
 bool isPathExist     (QString path);
 bool runProcess      (QString path);
+void logOutPut       (QString);
 
 
 #endif // ANTIKILL_H

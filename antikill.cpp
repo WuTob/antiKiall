@@ -14,6 +14,13 @@ AntiKill::~AntiKill()
 
 void AntiKill::run()
 {
+    try{
+        isPathExist(path);
+    }
+    catch(pathNoExistError &e){
+        logOutPut(e.errMsg());
+        QApplication::exit(0);
+    }
 
 }
 
@@ -49,4 +56,18 @@ bool runProcess(QString path)
     QProcess process;
 
     process.startDetached(path);
+}
+
+
+void logOutPut(QString outPut)
+{
+    QFile file("ErrorLog.log");
+
+    file.open(QIODevice::WriteOnly|QIODevice::Append);
+
+    QTextStream out(file);
+
+    out << endl
+        << QDateTime::currentDateTime().toString() << endl
+        << outPut << endl;
 }
